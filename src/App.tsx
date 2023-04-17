@@ -1,4 +1,6 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { Deposit } from "src/components";
+import { depositsService } from "src/services";
 import "./styles.scss";
 
 const ANNUAL_FEE = 13;
@@ -10,6 +12,7 @@ function App() {
     withoutTaxes: 0,
     total: 0,
   });
+  const [deposits, setDeposits] = useState<any[]>([]);
 
   function addTaxes(total = 0, value = 0) {
     const fee = total * MONTHLY_FEE;
@@ -43,6 +46,20 @@ function App() {
     });
   }
 
+  useEffect(() => {
+    async function getDeposits() {
+      const data = await depositsService.get();
+
+      setDeposits(data);
+    }
+
+    getDeposits();
+  }, []);
+
+  const renderDeposits = deposits.map(({ value, date }) => (
+    <Deposit value={value} date={date} />
+  ));
+
   return (
     <form onSubmit={handleSubmit} className="form">
       <div className="top-wrapper">
@@ -68,6 +85,8 @@ function App() {
         <p>Per mounth:</p>
         <span>{formatCurrency(addTaxes(result.total) - result.total)}</span>
       </div>
+
+      {renderDeposits}
     </form>
   );
 }
