@@ -43,62 +43,85 @@ export function TimeFeeCalculator() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col items-center rounded-lg shadow-md p-14 rounded-3xl"
-    >
-      <div className="flex flex-col gap-2">
-        <div>
-          <label htmlFor="start" className="flex">
+    <div className="flex gap-6 shadow-lg p-5 rounded-xl bg-white">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-2 w-72"
+      >
+        <div className="w-full">
+          <label htmlFor="start" className="flex pl-2">
             Start
           </label>
+
           <input
             id="start"
             name="start"
             type="number"
-            className="p-2 border-solid border-2  rounded-lg focus:border-indigo-600"
+            className="p-2 border-solid border-2  rounded-lg focus:border-indigo-600 w-full"
           />
         </div>
 
-        <div>
-          <label htmlFor="value" className="flex">
+        <div className="w-full">
+          <label htmlFor="value" className="flex pl-2">
             Value
           </label>
+
           <input
             id="value"
             name="value"
             type="number"
-            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg"
+            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg w-full"
           />
         </div>
 
-        <div>
-          <label htmlFor="years" className="flex">
+        <div className="w-full">
+          <label htmlFor="years" className="flex pl-2">
             Years
           </label>
+
           <input
             id="years"
             name="years"
             type="number"
-            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg"
+            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg w-full"
           />
         </div>
 
-        <button type="submit" className="p-2 bg-indigo-600 rounded-lg">
-          submit
+        <button
+          type="submit"
+          className="p-2 bg-indigo-700 rounded-lg text-white font-medium mt-4 w-full"
+        >
+          Calculate
         </button>
+      </form>
+
+      <div className="flex bg-indigo-700 w-1" />
+
+      <div className="flex flex-col gap-2 w-72">
+        <div className="flex flex-col">
+          <p>Without taxes:</p>
+
+          <span className="border-solid border-2 p-2 rounded-lg">
+            {formatCurrency(result.withoutTaxes)}
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          <p>Result:</p>
+
+          <span className="border-solid border-2 p-2 rounded-lg">
+            {formatCurrency(result.total)}
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          <p>Per mounth:</p>
+
+          <span className="border-solid border-2 p-2 rounded-lg">
+            {formatCurrency(addTaxes(result.total) - result.total)}
+          </span>
+        </div>
       </div>
-
-      <div>
-        <p>Without taxes:</p>
-        <span>{formatCurrency(result.withoutTaxes)}</span>
-
-        <p>Result:</p>
-        <span>{formatCurrency(result.total)}</span>
-
-        <p>Per mounth:</p>
-        <span>{formatCurrency(addTaxes(result.total) - result.total)}</span>
-      </div>
-    </form>
+    </div>
   );
 }
