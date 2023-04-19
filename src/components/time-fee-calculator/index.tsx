@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 
-const ANNUAL_FEE = 13.6;
+const ANNUAL_FEE = 13.6; // TODO get with brasilApi
 const MONTHLY_FEE = ANNUAL_FEE / 12 / 100;
 const MONTHLY_TAX = 22.5 / 100;
 
@@ -43,83 +43,87 @@ export function TimeFeeCalculator() {
   }
 
   return (
-    <div className="flex gap-6 shadow-lg p-5 rounded-xl bg-white">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center gap-2 w-72"
-      >
-        <div className="w-full">
-          <label htmlFor="start" className="flex pl-2">
-            Start
-          </label>
+    <div className="flex flex-col gap-2">
+      <h1 className="font-bold">Fee Calculator</h1>
 
-          <input
-            id="start"
-            name="start"
-            type="number"
-            className="p-2 border-solid border-2  rounded-lg focus:border-indigo-600 w-full"
-          />
-        </div>
-
-        <div className="w-full">
-          <label htmlFor="value" className="flex pl-2">
-            Value
-          </label>
-
-          <input
-            id="value"
-            name="value"
-            type="number"
-            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg w-full"
-          />
-        </div>
-
-        <div className="w-full">
-          <label htmlFor="years" className="flex pl-2">
-            Years
-          </label>
-
-          <input
-            id="years"
-            name="years"
-            type="number"
-            className="p-2 border-solid border-2 focus:border-indigo-600 rounded-lg w-full"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="p-2 bg-indigo-700 rounded-lg text-white font-medium mt-4 w-full"
+      <div className="flex gap-6">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center gap-2 w-52"
         >
-          Calculate
-        </button>
-      </form>
+          <div className="w-full">
+            <label htmlFor="start" className="flex pl-2">
+              Start
+            </label>
 
-      <div className="flex bg-indigo-700 w-1" />
+            <input
+              id="start"
+              name="start"
+              type="number"
+              className="h-10 p-2 border-solid border-2  rounded-lg w-full"
+            />
+          </div>
 
-      <div className="flex flex-col gap-2 w-72">
-        <div className="flex flex-col">
-          <p>Without taxes:</p>
+          <div className="w-full">
+            <label htmlFor="value" className="flex pl-2">
+              Value
+            </label>
 
-          <span className="border-solid border-2 p-2 rounded-lg">
-            {formatCurrency(result.withoutTaxes)}
-          </span>
-        </div>
+            <input
+              id="value"
+              name="value"
+              type="number"
+              className="h-10 p-2 border-solid border-2 rounded-lg w-full"
+            />
+          </div>
 
-        <div className="flex flex-col">
-          <p>Result:</p>
+          <div className="w-full">
+            <label htmlFor="years" className="flex ">
+              Years
+            </label>
 
-          <span className="border-solid border-2 p-2 rounded-lg">
-            {formatCurrency(result.total)}
-          </span>
-        </div>
+            <input
+              id="years"
+              name="years"
+              type="number"
+              className="h-10 p-2 border-solid border-2 rounded-lg w-full"
+            />
+          </div>
 
-        <div className="flex flex-col">
-          <p>Per mounth:</p>
+          <button
+            type="submit"
+            className="p-2 bg-indigo-700 rounded-lg text-white font-medium mt-4 w-full"
+          >
+            Calculate
+          </button>
+        </form>
 
-          <span className="border-solid border-2 p-2 rounded-lg">
-            {formatCurrency(addTaxes(result.total) - result.total)}
-          </span>
+        <div className="flex bg-indigo-700 w-1" />
+
+        <div className="flex flex-col gap-2 w-52">
+          <div className="flex flex-col">
+            <p className="flex pl-2">Without taxes:</p>
+
+            <span className="h-10 bg-slate-200 p-2 rounded-lg text-end">
+              {formatCurrency(result.withoutTaxes)}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <p className="flex pl-2">Result:</p>
+
+            <span className="h-10 bg-slate-200 p-2 rounded-lg text-end">
+              {formatCurrency(result.total)}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <p className="pl-2">Per mounth:</p>
+
+            <span className="h-10 bg-slate-200 p-2 rounded-lg text-end">
+              {formatCurrency(addTaxes(result.total) - result.total)}
+            </span>
+          </div>
         </div>
       </div>
     </div>
